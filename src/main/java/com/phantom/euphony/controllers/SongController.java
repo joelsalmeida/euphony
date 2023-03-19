@@ -24,7 +24,7 @@ public class SongController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Location", "/api/songs/" + newSong.getId().toString());
 
-        return new ResponseEntity(headers, HttpStatus.CREATED);
+        return new ResponseEntity(newSong, headers, HttpStatus.CREATED);
     }
 
     @PutMapping("{id}")
