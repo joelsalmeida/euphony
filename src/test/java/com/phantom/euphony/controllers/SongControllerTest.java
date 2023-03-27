@@ -2,9 +2,7 @@ package com.phantom.euphony.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phantom.euphony.model.Song;
-import com.phantom.euphony.services.GenericService;
 import com.phantom.euphony.services.SongService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +29,7 @@ class SongControllerTest {
     ObjectMapper objectMapper;
 
     @MockBean
-    GenericService<Song> genericService;
-    @MockBean
     SongService service;
-
-    @BeforeEach
-    void setUp() {
-        service = new SongService();
-    }
 
     @Test
     void testCreateSong() throws Exception {
@@ -48,7 +39,7 @@ class SongControllerTest {
                 .duration(7.7f)
                 .build();
 
-        given(genericService.create(any(Song.class))).willReturn(niceSong);
+        given(service.create(any(Song.class))).willReturn(niceSong);
 
         mockMvc.perform(post("/api/songs")
                         .accept(MediaType.APPLICATION_JSON)
@@ -77,7 +68,7 @@ class SongControllerTest {
 
         songsMock.add(niceSong);
 
-        given(genericService.getAll()).willReturn(songsMock);
+        given(service.getAll()).willReturn(songsMock);
 
         mockMvc.perform(get("/api/songs")
                         .accept(MediaType.APPLICATION_JSON)
